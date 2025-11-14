@@ -9,6 +9,11 @@ public class TogglePickaxe : MonoBehaviour
     private float rotSpeed = 15f;
     private Quaternion targetRot;
 
+    public GameObject pickaxeHead;
+
+    // The current tool state
+    // 0 = Pickaxe | 1 = Hammer
+    public int toolState = 0;
     private void Update()
     {
         // Pressed the right trigger
@@ -23,25 +28,27 @@ public class TogglePickaxe : MonoBehaviour
         }
 
 
-        if (Quaternion.Angle(transform.localRotation, targetRot) > 10f)
+        if (Quaternion.Angle(pickaxeHead.transform.localRotation, targetRot) > 10f)
         {
-            transform.localRotation = Quaternion.Lerp(transform.localRotation, targetRot, Time.deltaTime * rotSpeed);
+            pickaxeHead.transform.localRotation = Quaternion.Lerp(pickaxeHead.transform.localRotation, targetRot, Time.deltaTime * rotSpeed);
         }
         else
         {
-            transform.localRotation = targetRot;
+            pickaxeHead.transform.localRotation = targetRot;
         }
     }
 
     public void EquipHammer()
     {
-        targetRot = Quaternion.Euler(transform.localRotation.x, transform.localRotation.y, 180);
+        toolState = 1;
+        targetRot = Quaternion.Euler(pickaxeHead.transform.localRotation.x, pickaxeHead.transform.localRotation.y, 180);
         
     }
 
     public void EquipPickaxe()
     {
-        targetRot = Quaternion.Euler(transform.localRotation.x, transform.localRotation.y, 0);
+        toolState = 0;
+        targetRot = Quaternion.Euler(pickaxeHead.transform.localRotation.x, pickaxeHead.transform.localRotation.y, 0);
     }
 
 }

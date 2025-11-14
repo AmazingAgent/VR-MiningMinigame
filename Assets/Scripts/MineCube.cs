@@ -4,13 +4,21 @@ using UnityEngine;
 
 public class MineCube : MonoBehaviour
 {
+    private PickaxeDetector detector;
+
+    private void Start()
+    {
+        detector = transform.parent.GetComponentInParent<PickaxeDetector>();
+    }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Pickaxe"))
+        if (other.CompareTag("Pickaxe") && detector.colliders.Contains(other.gameObject))
         {
-            Debug.Log("Collider");
+            int toolState = other.gameObject.GetComponent<TogglePickaxe>().toolState;
 
-            Destroy(this.gameObject);
+            if (toolState == 0) Destroy(this.gameObject);
+            
+            detector.RemoveGameObject(other.gameObject);
         }
     }
 }
