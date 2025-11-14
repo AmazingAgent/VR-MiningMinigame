@@ -38,7 +38,8 @@ public class MineGridController : MonoBehaviour
         {
             for (int iy = 0; iy < gridDimensions.y; iy++)
             {
-                gridData[ix, iy] = 2;
+                gridData[ix, iy] = Random.Range(1,5);
+                //gridData[ix, iy] = 3;
             }
         }
     }
@@ -51,9 +52,13 @@ public class MineGridController : MonoBehaviour
             for (int iy = 0; iy < gridDimensions.y; iy++)
             {
                 GameObject newChunk = Instantiate(gridChunk);
+                newChunk.transform.name = "GridChunk";
                 newChunk.transform.parent = gridParent.transform;
                 newChunk.transform.localPosition = new Vector3(ix - gridOffset.x, iy - gridOffset.y, 0) * 0.1f;
                 newChunk.transform.localRotation = Quaternion.identity;
+                newChunk.GetComponent<GridChunkController>().SetChunkPos(new Vector2Int(ix, iy));
+                newChunk.GetComponent<GridChunkController>().SetChunkHealth(gridData[ix, iy]);
+                
             }
         }
     }
