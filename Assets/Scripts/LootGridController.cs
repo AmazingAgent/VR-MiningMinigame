@@ -6,6 +6,8 @@ public class LootGridController : MonoBehaviour
 {
     // Loot grid
     [SerializeField] private GameObject lootGrid;
+    [SerializeField] private MineGridController mineGrid;
+    [SerializeField] private GameObject objectStorage;
 
     // Grid information
     [SerializeField] private Vector2Int gridDimensions;
@@ -15,11 +17,10 @@ public class LootGridController : MonoBehaviour
 
     // Loot objects
     [SerializeField] GameObject[] lootObjects;
-    private List<GameObject> loot; // Stores all loot objects on the grid
+    private List<GameObject> loot = new List<GameObject>(); // Stores all loot objects on the grid
     void Start()
     {
-        GenerateGrid();
-        PopulateGrid();
+        InitializeGrid();
     }
 
     // Update is called once per frame
@@ -28,6 +29,34 @@ public class LootGridController : MonoBehaviour
 
     }
 
+    public void InitializeGrid()
+    {
+        ClearGrid();
+        GenerateGrid();
+        PopulateGrid();
+    }
+
+    // Clears all loot data
+    private void ClearGrid()
+    {
+        gridOffset = new Vector2((gridDimensions.x / 2f), (gridDimensions.y / 2f));
+        gridData = new int[gridDimensions.x, gridDimensions.y];
+
+        foreach (Transform child in lootGrid.transform)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+
+        for (int ix = 0; ix < gridDimensions.x; ix++)
+        {
+            for (int iy = 0; iy < gridDimensions.y; iy++)
+            {
+                gridData[ix, iy] = 0;
+            }
+        }
+
+        loot.Clear();
+    }
     private void GenerateGrid()
     {
         gridOffset = new Vector2((gridDimensions.x / 2f), (gridDimensions.y / 2f));
@@ -45,36 +74,102 @@ public class LootGridController : MonoBehaviour
     private void PopulateGrid()
     {
         // Grab random object to try and put in grid
-        GameObject randomObj = lootObjects[Random.Range(0, lootObjects.Length)];
+        //GameObject randomObj = lootObjects[0];
+        GameObject randomObj;
+        GameObject lootObjToSpawn;
 
-        if (IsEmpty(new Vector2Int(1, 1))) { 
-            PlaceLoot(randomObj, new Vector2Int(1, 1), 0);
-        }
-        if (IsEmpty(new Vector2Int(1, 1)))
+        int objectCount = Random.Range(2, 5);
+        int tries = 100;
+
+        while (objectCount > 0 && tries > 0)
         {
-            PlaceLoot(randomObj, new Vector2Int(1, 1), 0);
+            randomObj = lootObjects[Random.Range(0, lootObjects.Length)];
+            lootObjToSpawn = Instantiate(randomObj, transform.position, transform.rotation);
+
+            if (TryToSpawnLoot(lootObjToSpawn)) objectCount--;
+            tries--;
         }
-
-
     }
 
-    private void PlaceLoot(GameObject lootObj, Vector2Int lootPos, int lootRot)
+
+
+    private bool TryToSpawnLoot(GameObject lootObj)
+    {
+        List<Vector3Int> possiblePositions = new List<Vector3Int>();
+        List<Vector2Int> lootPositions = new List<Vector2Int>();
+
+        // Checks if it is possible to spawn here
+        for (int rotation = 0; rotation <= 3; rotation++)
+        {
+            lootPositions = lootObj.GetComponent<LootData>().GetOccupiedSlots(rotation);
+
+            for (int ix = 0; ix < gridDimensions.x; ix++)
+            {
+                for (int iy = 0; iy < gridDimensions.y; iy++)
+                {
+                    if (IsSpaceAvailable(new Vector2Int(ix,iy), lootPositions))
+                    {
+                        possiblePositions.Add(new Vector3Int(ix,iy,rotation));
+                    }
+                }
+            }
+        }
+
+        if (possiblePositions.Count > 0)
+        {
+            Vector3Int spawnedLootPos = possiblePositions[Random.Range(0, possiblePositions.Count)];
+            PlaceLoot(lootObj, new Vector2Int(spawnedLootPos.x, spawnedLootPos.y), spawnedLootPos.z);
+            return true;
+        }
+        Destroy(lootObj);
+        return false;
+    }
+
+
+
+    private void PlaceLoot(GameObject newLoot, Vector2Int lootPos, int lootRot)
     {
 
-        GameObject newLoot = Instantiate(lootObj);
+
         newLoot.transform.parent = lootGrid.transform;
         newLoot.transform.rotation = lootGrid.transform.rotation;
+        newLoot.transform.localEulerAngles = new Vector3(0,0,-90 * lootRot);
         newLoot.transform.localPosition = new Vector3(lootPos.x - gridOffset.x, lootPos.y - gridOffset.y, 0);
 
-        loot.Add(newLoot);
+        newLoot.GetComponent<LootData>().SetChunkSlots(lootPos, lootRot, mineGrid);
+        newLoot.GetComponent<LootData>().SetObjectStorage(objectStorage);
+        //loot.Add(newLoot);
 
-        gridData[lootPos.x, lootPos.y] = 1;
+        OccupySpaces(lootPos, newLoot.GetComponent<LootData>().GetOccupiedSlots(lootRot));
+        
+    }
+
+    private void OccupySpaces(Vector2Int basePos, List<Vector2Int> slotPositions)
+    {
+        foreach (Vector2Int position in slotPositions)
+        {
+            gridData[basePos.x + position.x, basePos.y + position.y] = 1;
+        }
+    }
+
+    
+    private bool IsSpaceAvailable(Vector2Int basePos, List<Vector2Int> slotPositions)
+    {
+        bool available = true;
+        foreach (Vector2Int slotPosition in slotPositions)
+        {
+            if (!IsSlotEmpty(basePos + slotPosition)) { available = false; break; }
+        }
+        return available;
     }
 
     // Checks if the chunk at a position is occupied
-    private bool IsEmpty(Vector2Int slotPos)
+    private bool IsSlotEmpty(Vector2Int slotPos)
     {
-        if (gridData[slotPos.x, slotPos.y] == 0) { return true; }
+        if (slotPos.x >= 0 && slotPos.y >= 0 && slotPos.x < gridDimensions.x && slotPos.y < gridDimensions.y)
+        {
+            if (gridData[slotPos.x, slotPos.y] == 0) { return true; }
+        }
         return false;
     }
 }

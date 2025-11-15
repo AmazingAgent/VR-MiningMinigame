@@ -270,6 +270,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 666556564}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &402828763
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 402828764}
+  m_Layer: 0
+  m_Name: ObjectStorage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &402828764
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 402828763}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &445176036
 GameObject:
   m_ObjectHideFlags: 0
@@ -682,6 +713,7 @@ Transform:
   - {fileID: 1850425085}
   - {fileID: 992849693}
   - {fileID: 1155863528}
+  - {fileID: 994708179}
   - {fileID: 1649304081}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -165, y: 0, z: 0}
@@ -760,6 +792,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lootGrid: {fileID: 1649304080}
+  mineGrid: {fileID: 862961941}
+  objectStorage: {fileID: 402828763}
   gridDimensions: {x: 10, y: 6}
   lootObjects:
   - {fileID: 8861908214268016003, guid: 7c9b35a264fdf224185554ccaa69d30c, type: 3}
@@ -1113,7 +1147,6 @@ GameObject:
   - component: {fileID: 922139319}
   - component: {fileID: 922139318}
   - component: {fileID: 922139317}
-  - component: {fileID: 922139316}
   m_Layer: 0
   m_Name: HoverModel
   m_TagString: Pickaxe
@@ -1121,27 +1154,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!135 &922139316
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 922139315}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.2
-  m_Center: {x: 1, y: 0, z: 2.3}
 --- !u!23 &922139317
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1250,6 +1262,18 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 862961941}
         m_TargetAssemblyTypeName: MineGridController, Assembly-CSharp
+        m_MethodName: InitializeGrid
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 862961943}
+        m_TargetAssemblyTypeName: LootGridController, Assembly-CSharp
         m_MethodName: InitializeGrid
         m_Mode: 1
         m_Arguments:
@@ -1430,7 +1454,7 @@ GameObject:
   - component: {fileID: 994708181}
   - component: {fileID: 994708180}
   m_Layer: 0
-  m_Name: Plane
+  m_Name: LootPanelPlane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1444,12 +1468,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 994708178}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.5, y: -0.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 0.6}
+  m_LocalRotation: {x: 0.70710677, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: -0.025000028}
+  m_LocalScale: {x: 0.1, y: 0.100000024, z: 0.060000014}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1649304081}
+  m_Father: {fileID: 862961938}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!64 &994708180
 MeshCollider:
@@ -2812,8 +2836,7 @@ Transform:
   m_LocalPosition: {x: 0.05, y: 0.05, z: -0.025}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 994708179}
+  m_Children: []
   m_Father: {fileID: 862961938}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1671138093
@@ -3509,3 +3532,4 @@ SceneRoots:
   - {fileID: 2015582035}
   - {fileID: 862961938}
   - {fileID: 445176042}
+  - {fileID: 402828764}

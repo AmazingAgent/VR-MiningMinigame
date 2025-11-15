@@ -5,7 +5,7 @@ using UnityEngine;
 public class GridChunkController : MonoBehaviour
 {
     [SerializeField] public int chunkHealth = 0;
-    [SerializeField] private Vector2Int chunkPos;
+    [SerializeField] public Vector2Int chunkPos;
 
     [SerializeField] private GameObject chunkObject;
     [SerializeField] public Stack<GameObject> chunks = new Stack<GameObject>();

@@ -92,5 +92,24 @@ public class MineGridController : MonoBehaviour
         {
             chunkData[damagePos.x, damagePos.y].GetComponent<GridChunkController>().DamageChunk(damage);
         }
+        //UpdateChunkData();
+    }
+
+    private void UpdateChunkData()
+    {
+        foreach (var chunk in chunkData)
+        {
+            Vector2Int chunkPos = chunk.GetComponent<GridChunkController>().chunkPos;
+            gridData[chunkPos.x, chunkPos.y] = chunk.GetComponent<GridChunkController>().chunkHealth;
+        }
+    }
+
+
+    public int GetGridData(Vector2Int pos)
+    {
+        UpdateChunkData();
+        //Debug.Log(gridData.Length);
+        Debug.Log(pos.x + "'" + pos.y + " | " + gridData[pos.x, pos.y]);
+        return gridData[pos.x, pos.y];
     }
 }
