@@ -109,7 +109,6 @@ public class MineGridController : MonoBehaviour
     {
         UpdateChunkData();
         //Debug.Log(gridData.Length);
-        Debug.Log(pos.x + "'" + pos.y + " | " + gridData[pos.x, pos.y]);
         return gridData[pos.x, pos.y];
     }
 }

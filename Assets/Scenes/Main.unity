@@ -796,7 +796,12 @@ MonoBehaviour:
   objectStorage: {fileID: 402828763}
   gridDimensions: {x: 10, y: 6}
   lootObjects:
-  - {fileID: 8861908214268016003, guid: 7c9b35a264fdf224185554ccaa69d30c, type: 3}
+  - {fileID: 8861908214268016003, guid: eb28a146d19738444adbcd28834dfcd9, type: 3}
+  - {fileID: 8861908214268016003, guid: a6ccc554f7f1e4f42bc6d90d683c070d, type: 3}
+  - {fileID: 8861908214268016003, guid: 04a5e9b3279cc604ab96c49d214f732c, type: 3}
+  - {fileID: 8861908214268016003, guid: 2df53522405802d4396d125d99d37f93, type: 3}
+  - {fileID: 8861908214268016003, guid: f38c588bc1fe93b4c9766d08edb56d28, type: 3}
+  - {fileID: 8861908214268016003, guid: aa9637c58f81fe840800d60803043a5a, type: 3}
 --- !u!1 &873295020
 GameObject:
   m_ObjectHideFlags: 0
