@@ -27,6 +27,24 @@ public class MineGridController : MonoBehaviour
         
     }
 
+
+
+    // Initialize the grid
+    public void InitializeGrid()
+    {
+        ClearGrid();
+        GenerateGrid();
+        SpawnGrid();
+    }
+
+    private void ClearGrid()
+    {
+        foreach (Transform child in gridParent.transform)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+    }
+
     // Generates the data for each grid space
     private void GenerateGrid()
     {
@@ -40,7 +58,7 @@ public class MineGridController : MonoBehaviour
         {
             for (int iy = 0; iy < gridDimensions.y; iy++)
             {
-                gridData[ix, iy] = Random.Range(1,5);
+                gridData[ix, iy] = Random.Range(1,6);
                 //gridData[ix, iy] = 3;
             }
         }

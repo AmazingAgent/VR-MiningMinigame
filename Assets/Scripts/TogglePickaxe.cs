@@ -7,9 +7,11 @@ public class TogglePickaxe : MonoBehaviour
 {
     //private bool isHammer = false;
     private float rotSpeed = 15f;
-    private Quaternion targetRot;
+    private Quaternion targetHeadRot;
+    private Quaternion targetGearRot;
 
     public GameObject pickaxeHead;
+    public GameObject pickaxeGear;
 
     // The current tool state
     // 0 = Pickaxe | 1 = Hammer
@@ -28,27 +30,31 @@ public class TogglePickaxe : MonoBehaviour
         }
 
 
-        if (Quaternion.Angle(pickaxeHead.transform.localRotation, targetRot) > 10f)
+        if (Quaternion.Angle(pickaxeHead.transform.localRotation, targetHeadRot) > 10f)
         {
-            pickaxeHead.transform.localRotation = Quaternion.Lerp(pickaxeHead.transform.localRotation, targetRot, Time.deltaTime * rotSpeed);
+            pickaxeHead.transform.localRotation = Quaternion.Lerp(pickaxeHead.transform.localRotation, targetHeadRot, Time.deltaTime * rotSpeed);
+            pickaxeGear.transform.localRotation = Quaternion.Lerp(pickaxeGear.transform.localRotation, targetGearRot, Time.deltaTime * rotSpeed);
         }
         else
         {
-            pickaxeHead.transform.localRotation = targetRot;
+            pickaxeHead.transform.localRotation = targetHeadRot;
+            pickaxeGear.transform.localRotation = targetGearRot;
         }
     }
 
     public void EquipHammer()
     {
         toolState = 1;
-        targetRot = Quaternion.Euler(pickaxeHead.transform.localRotation.x, pickaxeHead.transform.localRotation.y, 180);
-        
+        targetHeadRot = Quaternion.Euler(pickaxeHead.transform.localRotation.x, pickaxeHead.transform.localRotation.y, 180);
+        targetGearRot = Quaternion.Euler(pickaxeHead.transform.localRotation.x, pickaxeHead.transform.localRotation.y, -180);
+
     }
 
     public void EquipPickaxe()
     {
         toolState = 0;
-        targetRot = Quaternion.Euler(pickaxeHead.transform.localRotation.x, pickaxeHead.transform.localRotation.y, 0);
+        targetHeadRot = Quaternion.Euler(pickaxeHead.transform.localRotation.x, pickaxeHead.transform.localRotation.y, 0);
+        targetGearRot = Quaternion.Euler(pickaxeHead.transform.localRotation.x, pickaxeHead.transform.localRotation.y, 0);
     }
 
 }

@@ -6,8 +6,19 @@ public class MineCube : MonoBehaviour
 {
     private PickaxeDetector detector;
     private MineGridController gridController;
-    [SerializeField] Mesh chunkMesh;
-    [SerializeField] Mesh chunkCrackedMesh;
+    
+    // What type of chunk this is
+    // 1 = Thick chunk (innermost/2 health)
+    // 2 = Reinforced chunk (outer layers/3 health)
+    [SerializeField] private int chunkType = 0;
+
+    [SerializeField] private Material[] materialsDirt;
+    [SerializeField] private Material[] materialsStone;
+    [SerializeField] private Mesh chunkThickMesh;
+    [SerializeField] private Mesh chunkThickCrackedMesh;
+    [SerializeField] private Mesh chunkReinforcedMesh;
+    [SerializeField] private Mesh chunkMesh;
+    [SerializeField] private Mesh chunkCrackedMesh;
 
     // Chunk data
     [SerializeField] private int health = 2;
@@ -42,7 +53,7 @@ public class MineCube : MonoBehaviour
 
                 gridController.DamageChunkAtPos(1, chunkPos + new Vector2Int(1, 1));
                 gridController.DamageChunkAtPos(1, chunkPos + new Vector2Int(-1, 1));
-                gridController.DamageChunkAtPos(1, chunkPos + new Vector2Int(-1, 1));
+                gridController.DamageChunkAtPos(1, chunkPos + new Vector2Int(1, -1));
                 gridController.DamageChunkAtPos(1, chunkPos + new Vector2Int(-1, -1));
             }
 
@@ -54,11 +65,16 @@ public class MineCube : MonoBehaviour
     {
         chunkPos = newPos;
     }
+    public void SetChunkType(int newChunkType)
+    {
+        chunkType = newChunkType;
+    }
     public void SetHealth(int newHealth)
     {
         health = newHealth;
         UpdateChunk();
     }
+
 
     // Damages the chunk
     public void DamageChunk(int damage)
@@ -84,22 +100,48 @@ public class MineCube : MonoBehaviour
     }
 
     // Updates the model or destroys the chunk
-    private void UpdateChunk()
+    public void UpdateChunk()
     {
-        switch (health)
-        {
-            case 0:
-                Destroy(this.gameObject);
-                break;
-            case 1:
-                gameObject.GetComponent<MeshFilter>().mesh = chunkCrackedMesh;
-                break;
-            case 2:
-                gameObject.GetComponent<MeshFilter>().mesh = chunkMesh;
-                break;
-            default:
-                Destroy(this.gameObject);
-                break;
+        // Innermost chunk (2 health)
+        if (chunkType == 1) {
+            GetComponent<MeshRenderer>().materials = materialsDirt;
+            switch (health)
+            {
+                case 0:
+                    Destroy(this.gameObject);
+                    break;
+                case 1:
+                    gameObject.GetComponent<MeshFilter>().mesh = chunkThickCrackedMesh;
+                    break;
+                case 2:
+                    gameObject.GetComponent<MeshFilter>().mesh = chunkThickMesh;
+                    break;
+                default:
+                    Destroy(this.gameObject);
+                    break;
+            }
+        }
+        // Outer chunks (3 health)
+        if (chunkType == 2) {
+            GetComponent<MeshRenderer>().materials = materialsStone;
+            switch (health)
+            {
+                case 0:
+                    Destroy(this.gameObject);
+                    break;
+                case 1:
+                    gameObject.GetComponent<MeshFilter>().mesh = chunkCrackedMesh;
+                    break;
+                case 2:
+                    gameObject.GetComponent<MeshFilter>().mesh = chunkMesh;
+                    break;
+                case 3:
+                    gameObject.GetComponent<MeshFilter>().mesh = chunkReinforcedMesh;
+                    break;
+                default:
+                    Destroy(this.gameObject);
+                    break;
+            }
         }
     }
 }

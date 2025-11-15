@@ -40,36 +40,35 @@ public class GridChunkController : MonoBehaviour
             Destroy(child.gameObject);
         }
 
+
         // Spawns new chunks for the health
-        for (int i = 0; i <= chunkHealth; i+=2)
+        if (chunkHealth <= 2) // Generating just 1 layer
         {
-
-            GameObject newChunk = Instantiate(chunkObject);
-            newChunk.GetComponent<MineCube>().SetHealth(2);
-            newChunk.GetComponent<MineCube>().SetChunkPos(chunkPos);
-            newChunk.GetComponent<BoxCollider>().enabled = false;
-            newChunk.transform.name = "ChunkPiece";
-            newChunk.transform.parent = transform;
-            newChunk.transform.localPosition = Vector3.zero + new Vector3(0, 0, (i - (i % 2)) * 0.125f);
-            newChunk.transform.localRotation = Quaternion.identity;
-
-            chunks.Push(newChunk);
+            GenerateChunk(chunkHealth, 1, 1);
         }
-        if (chunkHealth % 2 == 1) // 1 Extra layer
+        else // Generating 1 layer and more
         {
-            GameObject newChunk = Instantiate(chunkObject);
-            newChunk.GetComponent<MineCube>().SetHealth(1);
-            newChunk.GetComponent<MineCube>().SetChunkPos(chunkPos);
-            newChunk.GetComponent<BoxCollider>().enabled = false;
-            newChunk.transform.name = "ChunkPiece";
-            newChunk.transform.parent = transform;
-            newChunk.transform.localPosition = Vector3.zero + new Vector3(0, 0, (chunkHealth + 1) * 0.125f);
-            newChunk.transform.localRotation = Quaternion.identity;
-
-            chunks.Push(newChunk);
+            GenerateChunk(2, 1, 1);
+            GenerateChunk(chunkHealth - 2, 2, 3);
         }
 
         chunks.Peek().GetComponent<BoxCollider>().enabled = true;
+    }
+
+    public void GenerateChunk(int newHealth, int newChunkType, float zPos)
+    {
+        GameObject newChunk = Instantiate(chunkObject);
+        newChunk.GetComponent<MineCube>().SetHealth(newHealth);
+        newChunk.GetComponent<MineCube>().SetChunkType(newChunkType);
+        newChunk.GetComponent<MineCube>().SetChunkPos(chunkPos);
+        newChunk.GetComponent<MineCube>().UpdateChunk();
+        newChunk.GetComponent<BoxCollider>().enabled = false;
+        newChunk.transform.name = "ChunkPiece";
+        newChunk.transform.parent = transform;
+        newChunk.transform.localPosition = Vector3.zero + new Vector3(0, 0, zPos * 0.125f);
+        newChunk.transform.localRotation = Quaternion.identity;
+
+        chunks.Push(newChunk);
     }
 
     public void DamageChunk(int damage)
