@@ -22,8 +22,6 @@ public class PickaxeController : MonoBehaviour
     {
         //transform.position = toolSlot.transform.position;
         //transform.localRotation = toolSlot.transform.localRotation;
-        rb.velocity = Vector3.zero;
-        rb.angularVelocity = Vector3.zero;
 
 
         if (Vector3.Distance(transform.position, toolSlot.transform.position) > 0.1f)

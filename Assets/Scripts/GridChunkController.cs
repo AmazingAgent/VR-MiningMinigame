@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class GridChunkController : MonoBehaviour
 {
-    [SerializeField] private int chunkHealth = 0;
+    [SerializeField] public int chunkHealth = 0;
     [SerializeField] private Vector2Int chunkPos;
 
     [SerializeField] private GameObject chunkObject;
-    [SerializeField] private Stack<GameObject> chunks = new Stack<GameObject>();
+    [SerializeField] public Stack<GameObject> chunks = new Stack<GameObject>();
     void Start()
     {
         
@@ -47,6 +47,7 @@ public class GridChunkController : MonoBehaviour
             GameObject newChunk = Instantiate(chunkObject);
             newChunk.GetComponent<MineCube>().SetHealth(2);
             newChunk.GetComponent<MineCube>().SetChunkPos(chunkPos);
+            newChunk.GetComponent<BoxCollider>().enabled = false;
             newChunk.transform.name = "ChunkPiece";
             newChunk.transform.parent = transform;
             newChunk.transform.localPosition = Vector3.zero + new Vector3(0, 0, (i - (i % 2)) * 0.125f);
@@ -59,6 +60,7 @@ public class GridChunkController : MonoBehaviour
             GameObject newChunk = Instantiate(chunkObject);
             newChunk.GetComponent<MineCube>().SetHealth(1);
             newChunk.GetComponent<MineCube>().SetChunkPos(chunkPos);
+            newChunk.GetComponent<BoxCollider>().enabled = false;
             newChunk.transform.name = "ChunkPiece";
             newChunk.transform.parent = transform;
             newChunk.transform.localPosition = Vector3.zero + new Vector3(0, 0, (chunkHealth + 1) * 0.125f);
@@ -67,14 +69,17 @@ public class GridChunkController : MonoBehaviour
             chunks.Push(newChunk);
         }
 
-
+        chunks.Peek().GetComponent<BoxCollider>().enabled = true;
     }
 
     public void DamageChunk(int damage)
     {
         if (chunks.Count > 0)
         {
-            chunks.Peek().GetComponent<MineCube>().DamageChunk(damage);
+            GameObject chunk = chunks.Peek() as GameObject;
+            chunk.GetComponent<MineCube>().DamageChunk(damage);
+            chunk.GetComponent<BoxCollider>().enabled = true;
         }
+        
     }
 }

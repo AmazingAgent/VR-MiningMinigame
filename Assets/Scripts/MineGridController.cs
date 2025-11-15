@@ -7,6 +7,7 @@ public class MineGridController : MonoBehaviour
     // Grid information
     [SerializeField] private Vector2Int gridDimensions;
     private int[,] gridData;
+    private GameObject[,] chunkData;
     private Vector2 gridOffset;
 
     // Grid gameobjects
@@ -34,6 +35,7 @@ public class MineGridController : MonoBehaviour
         gameObject.GetComponent<BoxCollider>().size = new Vector3(gridDimensions.x * 0.1f, gridDimensions.y * 0.1f, 0.15f);
 
         gridData = new int[gridDimensions.x, gridDimensions.y];
+        chunkData = new GameObject[gridDimensions.x, gridDimensions.y];
         for (int ix = 0; ix < gridDimensions.x; ix++)
         {
             for (int iy = 0; iy < gridDimensions.y; iy++)
@@ -58,9 +60,19 @@ public class MineGridController : MonoBehaviour
                 newChunk.transform.localRotation = Quaternion.identity;
                 newChunk.GetComponent<GridChunkController>().SetChunkPos(new Vector2Int(ix, iy));
                 newChunk.GetComponent<GridChunkController>().SetChunkHealth(gridData[ix, iy]);
-                
+
+                chunkData[ix,iy] = newChunk;
             }
         }
     }
 
+
+    public void DamageChunkAtPos(int damage, Vector2Int damagePos)
+    {
+        // Check if inside dimensions
+        if (damagePos.x >= 0 && damagePos.x < gridDimensions.x && damagePos.y >= 0 && damagePos.y < gridDimensions.y)
+        {
+            chunkData[damagePos.x, damagePos.y].GetComponent<GridChunkController>().DamageChunk(damage);
+        }
+    }
 }
