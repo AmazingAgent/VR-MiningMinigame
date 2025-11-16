@@ -7,7 +7,10 @@ public class LootData : MonoBehaviour
 {
     public bool unlocked = false;
     [SerializeField] GameObject grabHandle;
+    [SerializeField] GameObject background;
+    [SerializeField] Vector3 backgroundPos;
     private GameObject objectStorage;
+    public GameObject lootPanel;
 
     [SerializeField] private List<Vector2Int> occupiedSlots = new List<Vector2Int>();
 
@@ -79,6 +82,9 @@ public class LootData : MonoBehaviour
         }
 
         gridData = newGridData;
+
+
+        backgroundPos = background.transform.position - lootPanel.transform.position;
     }
 
     public bool CheckChunkSlots()
@@ -110,6 +116,8 @@ public class LootData : MonoBehaviour
     {
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
         transform.parent = objectStorage.transform;
+        background.transform.parent = lootPanel.transform;
+        background.transform.position = backgroundPos + lootPanel.transform.position;
     }
 
 

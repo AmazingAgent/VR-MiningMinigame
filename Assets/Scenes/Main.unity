@@ -685,6 +685,7 @@ GameObject:
   m_Component:
   - component: {fileID: 862961938}
   - component: {fileID: 862961939}
+  - component: {fileID: 862961944}
   - component: {fileID: 862961940}
   - component: {fileID: 862961941}
   - component: {fileID: 862961943}
@@ -736,7 +737,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 0.75, z: 0.1}
+  m_Size: {x: 1, y: 0.7, z: 0.1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &862961940
 MonoBehaviour:
@@ -802,6 +803,29 @@ MonoBehaviour:
   - {fileID: 8861908214268016003, guid: 2df53522405802d4396d125d99d37f93, type: 3}
   - {fileID: 8861908214268016003, guid: f38c588bc1fe93b4c9766d08edb56d28, type: 3}
   - {fileID: 8861908214268016003, guid: aa9637c58f81fe840800d60803043a5a, type: 3}
+  - {fileID: 8861908214268016003, guid: 40ced4dc833d29444a0775caa29f1158, type: 3}
+  backgroundObject: {fileID: 8861908214268016003, guid: 8ccfdb8779c631d4aaca6e8c7ca38268, type: 3}
+--- !u!65 &862961944
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862961937}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 0.7, z: 0.1}
+  m_Center: {x: 0, y: 0, z: -0.075}
 --- !u!1 &873295020
 GameObject:
   m_ObjectHideFlags: 0
@@ -1464,7 +1488,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &994708179
 Transform:
   m_ObjectHideFlags: 0
@@ -1922,6 +1946,10 @@ PrefabInstance:
       propertyPath: m_ExcludeLayers.m_Bits
       value: 55
       objectReference: {fileID: 0}
+    - target: {fileID: 3903482225804038119, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: m_Constraints
+      value: 126
+      objectReference: {fileID: 0}
     - target: {fileID: 4148778239110795873, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
       propertyPath: m_Name
       value: '[BuildingBlock] OVRInteractionComprehensive'
@@ -1967,13 +1995,41 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5801245061754409418, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _jumpForce
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5801245061754409418, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
       propertyPath: _playerEyes
       value: 
       objectReference: {fileID: 921308838}
     - target: {fileID: 5801245061754409418, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _speedFactor
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5801245061754409418, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _acceleration
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5801245061754409418, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
       propertyPath: _playerOrigin
       value: 
       objectReference: {fileID: 1182102398}
+    - target: {fileID: 5801245061754409418, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _gravityFactor
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5801245061754409418, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _crouchSpeedFactor
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5801245061754409418, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _crouchHeightOffset
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5801245061754409418, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _runningSpeedFactor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6267690530596161800, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
       propertyPath: _ovrCameraRig
       value: 

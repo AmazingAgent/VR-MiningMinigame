@@ -18,6 +18,7 @@ public class LootGridController : MonoBehaviour
     // Loot objects
     [SerializeField] GameObject[] lootObjects;
     private List<GameObject> loot = new List<GameObject>(); // Stores all loot objects on the grid
+    [SerializeField] private GameObject backgroundObject;
     void Start()
     {
         InitializeGrid();
@@ -89,6 +90,21 @@ public class LootGridController : MonoBehaviour
             if (TryToSpawnLoot(lootObjToSpawn)) objectCount--;
             tries--;
         }
+
+        // Fill in the empty spaces with blank backgrounds
+        for (int ix = 0; ix < gridDimensions.x; ix++)
+        {
+            for (int iy = 0; iy < gridDimensions.y; iy++)
+            {
+                if (gridData[ix, iy] == 0) {
+                    GameObject newBackground = Instantiate(backgroundObject, transform.position, transform.rotation);
+                    newBackground.transform.parent = lootGrid.transform;
+                    newBackground.transform.rotation = lootGrid.transform.rotation;
+                    newBackground.transform.localEulerAngles = new Vector3(0, 0, 0);
+                    newBackground.transform.localPosition = new Vector3(ix - gridOffset.x, iy - gridOffset.y, 0);
+                }
+            }
+        }
     }
 
 
@@ -136,8 +152,10 @@ public class LootGridController : MonoBehaviour
         newLoot.transform.localEulerAngles = new Vector3(0,0,-90 * lootRot);
         newLoot.transform.localPosition = new Vector3(lootPos.x - gridOffset.x, lootPos.y - gridOffset.y, 0);
 
+        newLoot.GetComponent<LootData>().lootPanel = lootGrid;
         newLoot.GetComponent<LootData>().SetChunkSlots(lootPos, lootRot, mineGrid);
         newLoot.GetComponent<LootData>().SetObjectStorage(objectStorage);
+        
         //loot.Add(newLoot);
 
         OccupySpaces(lootPos, newLoot.GetComponent<LootData>().GetOccupiedSlots(lootRot));
