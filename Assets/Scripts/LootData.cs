@@ -71,13 +71,13 @@ public class LootData : MonoBehaviour
         List<Vector2Int> gridPositions = new List<Vector2Int>();
         chunkSlots = new Vector2Int[occupiedSlots.Count];
 
-        Debug.Log("setting chunks");
+        //Debug.Log("setting chunks");
         gridPositions = GetOccupiedSlots(rotation);
         int i = 0;
         foreach (Vector2Int gridPos in gridPositions)
         {
             chunkSlots[i] = gridPos + baseChunkPos;
-            Debug.Log("addslot" + (chunkSlots[i] + baseChunkPos));
+            //Debug.Log("addslot" + (chunkSlots[i] + baseChunkPos));
             i++;
         }
 

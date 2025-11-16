@@ -24,6 +24,7 @@ public class MineCube : MonoBehaviour
     [SerializeField] private int health = 2;
     [SerializeField] private Vector2Int chunkPos;
 
+
     private void Start()
     {
         detector = transform.parent.GetComponentInParent<PickaxeDetector>();
@@ -37,6 +38,10 @@ public class MineCube : MonoBehaviour
 
             if (toolState == 0) // Pickaxe hit
             {
+                // Damage the grid
+                gridController.DamageGrid(3);
+
+                // Damage chunks
                 DamageChunk(2);
                 gridController.DamageChunkAtPos(1, chunkPos + new Vector2Int(1, 0));
                 gridController.DamageChunkAtPos(1, chunkPos + new Vector2Int(-1, 0));
@@ -45,6 +50,10 @@ public class MineCube : MonoBehaviour
             }
             if (toolState == 1) // Hammer hit
             {
+                // Damage the grid
+                gridController.DamageGrid(5);
+
+                // Damage chunks
                 DamageChunk(2);
                 gridController.DamageChunkAtPos(2, chunkPos + new Vector2Int(1, 0));
                 gridController.DamageChunkAtPos(2, chunkPos + new Vector2Int(-1, 0));

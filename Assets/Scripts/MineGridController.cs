@@ -6,6 +6,8 @@ public class MineGridController : MonoBehaviour
 {
     // Grid information
     [SerializeField] private Vector2Int gridDimensions;
+    [SerializeField] private float gridHealth;
+    [SerializeField] private float gridCurrentHealth;
     private int[,] gridData;
     private GameObject[,] chunkData;
     private Vector2 gridOffset;
@@ -13,6 +15,10 @@ public class MineGridController : MonoBehaviour
     // Grid gameobjects
     [SerializeField] private GameObject gridChunk;
     [SerializeField] private GameObject gridParent;
+
+    // Loot grid
+    [SerializeField] private LootGridController lootGridController;
+    [SerializeField] private GridHealthbar gridHealthbar;
 
     void Start()
     {
@@ -32,9 +38,11 @@ public class MineGridController : MonoBehaviour
     // Initialize the grid
     public void InitializeGrid()
     {
+        lootGridController.InitializeGrid();
         ClearGrid();
         GenerateGrid();
         SpawnGrid();
+        gridHealthbar.UpdateHealth(gridCurrentHealth);
     }
 
     private void ClearGrid()
@@ -48,6 +56,10 @@ public class MineGridController : MonoBehaviour
     // Generates the data for each grid space
     private void GenerateGrid()
     {
+        // Reset the grid health
+        gridCurrentHealth = gridHealth;
+        gridHealthbar.SetMaxHealth(gridHealth);
+
         // Setup size of grid
         gridOffset = new Vector2((gridDimensions.x/2f) - 0.5f, (gridDimensions.y/2f) - 0.5f);
         gameObject.GetComponent<BoxCollider>().size = new Vector3(gridDimensions.x * 0.1f, gridDimensions.y * 0.1f, 0.15f);
@@ -58,7 +70,7 @@ public class MineGridController : MonoBehaviour
         {
             for (int iy = 0; iy < gridDimensions.y; iy++)
             {
-                gridData[ix, iy] = Random.Range(1,6);
+                gridData[ix, iy] = Random.Range(2,6);
                 //gridData[ix, iy] = 3;
             }
         }
@@ -102,6 +114,19 @@ public class MineGridController : MonoBehaviour
             Vector2Int chunkPos = chunk.GetComponent<GridChunkController>().chunkPos;
             gridData[chunkPos.x, chunkPos.y] = chunk.GetComponent<GridChunkController>().chunkHealth;
         }
+    }
+
+    public void DamageGrid(int damage)
+    {
+        gridCurrentHealth -= damage;
+        if (gridCurrentHealth <= 0) // Grid ran out of health
+        {
+            gridCurrentHealth = 0;
+            gridHealthbar.UpdateHealth(gridCurrentHealth);
+
+            InitializeGrid();
+        }
+        gridHealthbar.UpdateHealth(gridCurrentHealth);
     }
 
 

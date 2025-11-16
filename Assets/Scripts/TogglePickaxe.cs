@@ -1,5 +1,8 @@
+using Oculus.Interaction;
+using Oculus.Interaction.HandGrab;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -16,15 +19,35 @@ public class TogglePickaxe : MonoBehaviour
     // The current tool state
     // 0 = Pickaxe | 1 = Hammer
     public int toolState = 0;
+
+
+    // Grab information
+    public string grabbingHand = "none";
+    public GameObject handModelRight;
+    public GameObject handModelLeft;
     private void Update()
     {
+
         // Pressed the right trigger
-        if (OVRInput.GetDown(OVRInput.RawButton.RIndexTrigger))
+        if (OVRInput.GetDown(OVRInput.RawButton.RIndexTrigger) && grabbingHand == "right")
         {
             EquipHammer();
         }
+
         // Released the right trigger
-        if (OVRInput.GetUp(OVRInput.RawButton.RIndexTrigger))
+        if (OVRInput.GetUp(OVRInput.RawButton.RIndexTrigger) && grabbingHand == "right")
+        {
+            EquipPickaxe();
+        }
+
+        // Pressed the left trigger
+        if (OVRInput.GetDown(OVRInput.RawButton.LIndexTrigger) && grabbingHand == "left")
+        {
+            EquipHammer();
+        }
+
+        // Released the left trigger
+        if (OVRInput.GetUp(OVRInput.RawButton.LIndexTrigger) && grabbingHand == "left")
         {
             EquipPickaxe();
         }
@@ -42,6 +65,36 @@ public class TogglePickaxe : MonoBehaviour
         }
     }
 
+    public void OnSelect(DistanceGrabInteractable interactor)
+    {
+
+        //Debug.Log(interactor.Interactors.Count);
+        //Debug.Log(interactor.Interactors.ToList()[0].gameObject.name);
+        //Debug.Log(interactor.Interactors.ToList()[0].gameObject.transform.parent.parent.parent.name);
+
+        if (interactor.Interactors.Count > 0)
+        {
+            Debug.Log(interactor.Interactors.ToList().Last().gameObject.transform.parent.parent.parent.name);
+            if (interactor.Interactors.ToList().Last().gameObject.transform.parent.parent.parent.name.Contains("Right"))
+            {
+                grabbingHand = "right";
+                handModelRight.SetActive(false);
+            }
+            if (interactor.Interactors.ToList().Last().gameObject.transform.parent.parent.parent.name.Contains("Left"))
+            {
+                grabbingHand = "left";
+                handModelLeft.SetActive(false);
+            }
+        }
+    }
+    public void OnUnSelect()
+    {
+        grabbingHand = "none";
+        handModelRight.SetActive(true);
+        handModelLeft.SetActive(true);
+
+        EquipPickaxe();
+    }
     public void EquipHammer()
     {
         toolState = 1;
