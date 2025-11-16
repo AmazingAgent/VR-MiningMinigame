@@ -74,7 +74,7 @@ public class TogglePickaxe : MonoBehaviour
 
         if (interactor.Interactors.Count > 0)
         {
-            Debug.Log(interactor.Interactors.ToList().Last().gameObject.transform.parent.parent.parent.name);
+            //Debug.Log(interactor.Interactors.ToList().Last().gameObject.transform.parent.parent.parent.name);
             if (interactor.Interactors.ToList().Last().gameObject.transform.parent.parent.parent.name.Contains("Right"))
             {
                 grabbingHand = "right";
