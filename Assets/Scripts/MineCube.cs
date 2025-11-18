@@ -24,11 +24,15 @@ public class MineCube : MonoBehaviour
     [SerializeField] private int health = 2;
     [SerializeField] private Vector2Int chunkPos;
 
+    // Particles
+    private ParticleSystem ps;
+    public ParticleSystemRenderer psr;
 
     private void Start()
     {
         detector = transform.parent.GetComponentInParent<PickaxeDetector>();
         gridController = transform.parent.GetComponentInParent<MineGridController>();
+        ps = GetComponentInChildren<ParticleSystem>();
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -103,6 +107,7 @@ public class MineCube : MonoBehaviour
         {
             transform.parent.GetComponent<GridChunkController>().chunkHealth -= damage;
             health -= damage;
+            ps.Play();
         }
 
         UpdateChunk();
@@ -114,6 +119,8 @@ public class MineCube : MonoBehaviour
         // Innermost chunk (2 health)
         if (chunkType == 1) {
             GetComponent<MeshRenderer>().materials = materialsDirt;
+            Debug.Log(psr);
+            psr.material = materialsDirt[1];
             switch (health)
             {
                 case 0:
@@ -133,6 +140,7 @@ public class MineCube : MonoBehaviour
         // Outer chunks (3 health)
         if (chunkType == 2) {
             GetComponent<MeshRenderer>().materials = materialsStone;
+            psr.material = materialsStone[1];
             switch (health)
             {
                 case 0:
