@@ -179,7 +179,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 078b524a8e7bc384d803c8bccebb2fcf, type: 2}
+  - {fileID: 7982017627501273292, guid: d9ee2b290382c61428f598ed8e7d89cc, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -220,8 +220,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.5, y: 4.5, z: 0.5}
-  m_Center: {x: 1, y: 2, z: 0}
+  m_Size: {x: 0.5, y: 3.5, z: 0.5}
+  m_Center: {x: 1, y: 1.5, z: 0}
 --- !u!65 &891910652647770987
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -242,7 +242,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1.5, y: 0.5, z: 0.5}
-  m_Center: {x: 1, y: 4, z: 0}
+  m_Center: {x: 1, y: 3, z: 0}
 --- !u!65 &7598228797985644388
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -585,10 +585,9 @@ MonoBehaviour:
   - {x: 2, y: 0}
   - {x: 1, y: 1}
   - {x: 1, y: 2}
+  - {x: 0, y: 3}
   - {x: 1, y: 3}
-  - {x: 0, y: 4}
-  - {x: 1, y: 4}
-  - {x: 2, y: 4}
+  - {x: 2, y: 3}
   chunkSlots: []
 --- !u!54 &7937404977051907939
 Rigidbody:
@@ -616,7 +615,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 2
 --- !u!114 &7407817533793443990
 MonoBehaviour:
   m_ObjectHideFlags: 0
