@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Pickaxe
   - Hammer
+  - NoPickaxeHit
   layers:
   - Default
   - TransparentFX
@@ -42,4 +43,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: ParticleEffects
+    uniqueID: 1191549521
     locked: 0

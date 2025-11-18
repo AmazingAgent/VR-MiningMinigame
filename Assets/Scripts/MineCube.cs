@@ -25,14 +25,17 @@ public class MineCube : MonoBehaviour
     [SerializeField] private Vector2Int chunkPos;
 
     // Particles
-    private ParticleSystem ps;
-    public ParticleSystemRenderer psr;
+    public ParticleController psController;
+    //private ParticleSystem ps;
+    //public ParticleSystemRenderer psr;
 
     private void Start()
     {
         detector = transform.parent.GetComponentInParent<PickaxeDetector>();
         gridController = transform.parent.GetComponentInParent<MineGridController>();
-        ps = GetComponentInChildren<ParticleSystem>();
+        //ps = GetComponentInChildren<ParticleSystem>();
+        psController = GameObject.Find("ParticleStorage").GetComponent<ParticleController>();
+
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -92,7 +95,8 @@ public class MineCube : MonoBehaviour
     // Damages the chunk
     public void DamageChunk(int damage)
     {
-        
+
+        psController.SpawnParticle(chunkType - 1, transform.position, transform.eulerAngles, 1f);
 
         if (health - damage <= 0)
         {
@@ -107,7 +111,8 @@ public class MineCube : MonoBehaviour
         {
             transform.parent.GetComponent<GridChunkController>().chunkHealth -= damage;
             health -= damage;
-            ps.Play();
+
+            
         }
 
         UpdateChunk();
@@ -119,8 +124,8 @@ public class MineCube : MonoBehaviour
         // Innermost chunk (2 health)
         if (chunkType == 1) {
             GetComponent<MeshRenderer>().materials = materialsDirt;
-            Debug.Log(psr);
-            psr.material = materialsDirt[1];
+            //Debug.Log(psr);
+            //psr.material = materialsDirt[1];
             switch (health)
             {
                 case 0:
@@ -140,7 +145,7 @@ public class MineCube : MonoBehaviour
         // Outer chunks (3 health)
         if (chunkType == 2) {
             GetComponent<MeshRenderer>().materials = materialsStone;
-            psr.material = materialsStone[1];
+            //psr.material = materialsStone[1];
             switch (health)
             {
                 case 0:
