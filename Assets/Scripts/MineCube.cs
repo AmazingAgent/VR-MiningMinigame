@@ -54,6 +54,8 @@ public class MineCube : MonoBehaviour
                 gridController.DamageChunkAtPos(1, chunkPos + new Vector2Int(-1, 0));
                 gridController.DamageChunkAtPos(1, chunkPos + new Vector2Int(0, 1));
                 gridController.DamageChunkAtPos(1, chunkPos + new Vector2Int(0, -1));
+
+                other.gameObject.GetComponent<PickaxeHitEffects>().DoParticle(false);
             }
             if (toolState == 1) // Hammer hit
             {
@@ -71,6 +73,8 @@ public class MineCube : MonoBehaviour
                 gridController.DamageChunkAtPos(1, chunkPos + new Vector2Int(-1, 1));
                 gridController.DamageChunkAtPos(1, chunkPos + new Vector2Int(1, -1));
                 gridController.DamageChunkAtPos(1, chunkPos + new Vector2Int(-1, -1));
+
+                other.gameObject.GetComponent<PickaxeHitEffects>().DoParticle(true);
             }
 
             detector.RemoveGameObject(other.gameObject);
