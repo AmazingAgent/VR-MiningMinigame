@@ -7,6 +7,7 @@ TagManager:
   - Pickaxe
   - Hammer
   - NoPickaxeHit
+  - Chisel
   layers:
   - Default
   - TransparentFX

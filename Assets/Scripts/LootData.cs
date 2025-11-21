@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class LootData : MonoBehaviour
 {
-    public bool unlocked = false;
+    //public bool unlocked = false;
     [SerializeField] GameObject grabHandle;
     [SerializeField] GameObject background;
     [SerializeField] Vector3 backgroundPos;
@@ -116,8 +116,11 @@ public class LootData : MonoBehaviour
     {
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
         transform.parent = objectStorage.transform;
-        background.transform.parent = lootPanel.transform;
-        background.transform.position = backgroundPos + lootPanel.transform.position;
+        if (background != null)
+        {
+            background.transform.parent = lootPanel.transform;
+            background.transform.position = backgroundPos + lootPanel.transform.position;
+        }
     }
 
 

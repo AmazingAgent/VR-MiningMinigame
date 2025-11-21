@@ -14,6 +14,7 @@ public class HandleController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        transform.Translate(transform.position - (handle.position + transformOffset));
         transform.position = handle.position + transformOffset;
     }
 }

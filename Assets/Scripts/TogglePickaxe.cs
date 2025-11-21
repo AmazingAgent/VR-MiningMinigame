@@ -25,6 +25,11 @@ public class TogglePickaxe : MonoBehaviour
     public string grabbingHand = "none";
     public GameObject handModelRight;
     public GameObject handModelLeft;
+
+    private void Start()
+    {
+        EquipPickaxe();
+    }
     private void Update()
     {
 
@@ -78,36 +83,36 @@ public class TogglePickaxe : MonoBehaviour
             if (interactor.Interactors.ToList().Last().gameObject.transform.parent.parent.parent.name.Contains("Right"))
             {
                 grabbingHand = "right";
-                handModelRight.SetActive(false);
+                //handModelRight.SetActive(false);
             }
             if (interactor.Interactors.ToList().Last().gameObject.transform.parent.parent.parent.name.Contains("Left"))
             {
                 grabbingHand = "left";
-                handModelLeft.SetActive(false);
+                //handModelLeft.SetActive(false);
             }
         }
     }
     public void OnUnSelect()
     {
         grabbingHand = "none";
-        handModelRight.SetActive(true);
-        handModelLeft.SetActive(true);
+        //handModelRight.SetActive(true);
+        //handModelLeft.SetActive(true);
 
         EquipPickaxe();
     }
     public void EquipHammer()
     {
         toolState = 1;
-        targetHeadRot = Quaternion.Euler(pickaxeHead.transform.localRotation.x, pickaxeHead.transform.localRotation.y, 180);
-        targetGearRot = Quaternion.Euler(pickaxeHead.transform.localRotation.x, pickaxeHead.transform.localRotation.y, -180);
+        targetHeadRot = Quaternion.Euler(pickaxeHead.transform.localEulerAngles.x, pickaxeHead.transform.localEulerAngles.y, 180);
+        targetGearRot = Quaternion.Euler(pickaxeHead.transform.localEulerAngles.x, pickaxeHead.transform.localEulerAngles.y, -180);
 
     }
 
     public void EquipPickaxe()
     {
         toolState = 0;
-        targetHeadRot = Quaternion.Euler(pickaxeHead.transform.localRotation.x, pickaxeHead.transform.localRotation.y, 0);
-        targetGearRot = Quaternion.Euler(pickaxeHead.transform.localRotation.x, pickaxeHead.transform.localRotation.y, 0);
+        targetHeadRot = Quaternion.Euler(pickaxeHead.transform.localEulerAngles.x, pickaxeHead.transform.localEulerAngles.y, 0);
+        targetGearRot = Quaternion.Euler(pickaxeHead.transform.localEulerAngles.x, pickaxeHead.transform.localEulerAngles.y, 0);
     }
 
 }

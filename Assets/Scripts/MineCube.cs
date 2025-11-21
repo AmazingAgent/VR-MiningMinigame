@@ -99,8 +99,8 @@ public class MineCube : MonoBehaviour
     // Damages the chunk
     public void DamageChunk(int damage)
     {
-
-        psController.SpawnParticle(chunkType - 1, transform.position, transform.eulerAngles, 1f);
+        if (psController != null) psController.SpawnParticle(chunkType - 1, transform.position, transform.eulerAngles, 1f);
+        
 
         if (health - damage <= 0)
         {
