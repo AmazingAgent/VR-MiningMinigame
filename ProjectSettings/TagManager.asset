@@ -8,6 +8,7 @@ TagManager:
   - Hammer
   - NoPickaxeHit
   - Chisel
+  - Brush
   layers:
   - Default
   - TransparentFX

@@ -24,13 +24,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 320184949183594897}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1, y: 2, z: 0}
+  m_LocalRotation: {x: -0.3420201, y: 0, z: 0, w: 0.9396927}
+  m_LocalPosition: {x: 1, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7564757329322338107}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -40, y: 0, z: 0}
 --- !u!1 &3653954840375936968
 GameObject:
   m_ObjectHideFlags: 0
@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 891910652647770987}
   - component: {fileID: 7598228797985644388}
   - component: {fileID: 5505056411155148551}
+  - component: {fileID: 215652154400647820}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -209,7 +210,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4111472175777497722}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: ea980ced7ccbfbc4087f767ded3f77cf, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -230,7 +231,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4111472175777497722}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: ea980ced7ccbfbc4087f767ded3f77cf, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -251,7 +252,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4111472175777497722}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: ea980ced7ccbfbc4087f767ded3f77cf, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -287,6 +288,21 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -7587030971442298145, guid: d9ee2b290382c61428f598ed8e7d89cc, type: 3}
+--- !u!114 &215652154400647820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4111472175777497722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69fe573e9cffee04fa491ac8bb43914b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverMaterial: {fileID: 2100000, guid: 6668cd7e7defc3c4dba0bac8e452a0c6, type: 2}
+  originalMaterials: []
+  newMats: []
 --- !u!1 &7615190657991593006
 GameObject:
   m_ObjectHideFlags: 0
@@ -597,7 +613,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d71885aa7f49ded439861db7f0f2c33a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unlocked: 0
   grabHandle: {fileID: 7615190657991593006}
   background: {fileID: 3653954840375936968}
   backgroundPos: {x: 0, y: 0, z: 0}
@@ -676,10 +691,34 @@ MonoBehaviour:
   _interactableView: {fileID: 5922924426231272678}
   _whenHover:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 215652154400647820}
+        m_TargetAssemblyTypeName: LootHover, Assembly-CSharp
+        m_MethodName: OnHover
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _whenUnhover:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 215652154400647820}
+        m_TargetAssemblyTypeName: LootHover, Assembly-CSharp
+        m_MethodName: OnUnHover
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _whenSelect:
     m_PersistentCalls:
       m_Calls:
@@ -695,9 +734,59 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 215652154400647820}
+        m_TargetAssemblyTypeName: LootHover, Assembly-CSharp
+        m_MethodName: OnSelect
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 5922924426231272678}
+          m_ObjectArgumentAssemblyTypeName: Oculus.Interaction.DistanceGrabInteractable,
+            Oculus.Interaction
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 215652154400647820}
+        m_TargetAssemblyTypeName: LootHover, Assembly-CSharp
+        m_MethodName: OnUnHover
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _whenUnselect:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 215652154400647820}
+        m_TargetAssemblyTypeName: LootHover, Assembly-CSharp
+        m_MethodName: OnUnSelect
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 5922924426231272678}
+          m_ObjectArgumentAssemblyTypeName: Oculus.Interaction.DistanceGrabInteractable,
+            Oculus.Interaction
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 215652154400647820}
+        m_TargetAssemblyTypeName: LootHover, Assembly-CSharp
+        m_MethodName: OnUnHover
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _whenInteractorViewAdded:
     m_PersistentCalls:
       m_Calls: []
