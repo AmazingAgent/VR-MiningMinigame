@@ -5,12 +5,14 @@ using UnityEngine;
 public class WallVisibility : MonoBehaviour
 {
     [SerializeField] private float moveSpeed;
+    [SerializeField] private float posYOffset = 3.1f;
     [SerializeField] private bool isTopWall;
     public float basePosY;
     private float targetPosY;
     [SerializeField] public bool isAtTarget = true;
     [SerializeField] private MineGridController controller;
     [SerializeField] private float loadDelay;
+    [SerializeField] private WallSounds wallSounds;
 
     void Start()
     {
@@ -30,12 +32,26 @@ public class WallVisibility : MonoBehaviour
         }
         else
         {
-
+            if (wallSounds != null)
+            {
+                wallSounds.StopMove();
+            }
         }
+
+        
+
 
         if (!isAtTarget && transform.localPosition.y == basePosY)
         {
             isAtTarget = true;
+
+            if (wallSounds != null)
+            {
+                wallSounds.StopMove();
+                wallSounds.PlaySlam();
+            }
+            
+
             if (controller != null)
             {
                 StartCoroutine(DelayWallLoad());
@@ -46,12 +62,18 @@ public class WallVisibility : MonoBehaviour
     private IEnumerator DelayWallLoad()
     {
         Debug.Log("start load");
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(loadDelay);
         controller.InitializeGrid();
         Debug.Log("end load");
     }
     public void CloseWall()
     {
+        if (wallSounds != null)
+        {
+            wallSounds.PlayMove();
+        }
+        
+
         isAtTarget = false;
         targetPosY = basePosY;
         //Debug.Log("Closing: " + gameObject.name + " " + basePosY + " " + targetPosY);
@@ -59,14 +81,20 @@ public class WallVisibility : MonoBehaviour
 
     public void OpenWall()
     {
+        if (wallSounds != null)
+        {
+            wallSounds.PlayMove();
+        }
+        
+
         isAtTarget = false;
         if (isTopWall)
         {
-            targetPosY = basePosY - 3.1f;
+            targetPosY = basePosY - posYOffset;
         }
         else
         {
-            targetPosY = basePosY + 3.1f;
+            targetPosY = basePosY + posYOffset;
         }
         //Debug.Log("Opening: " + gameObject.name + " " + basePosY + " " + targetPosY);
     }

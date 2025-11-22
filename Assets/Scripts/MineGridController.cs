@@ -1,3 +1,4 @@
+using Meta.XR.ImmersiveDebugger.UserInterface.Generic;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,6 +25,7 @@ public class MineGridController : MonoBehaviour
     [SerializeField] private WallController wallController;
     [SerializeField] private WallVisibility topWall;
     [SerializeField] private bool loading = true;
+    [SerializeField] private ResetButton resetButton;
 
     // Pickaxe Detector
     [SerializeField] private PickaxeDetector pickaxeDetector;
@@ -65,6 +67,7 @@ public class MineGridController : MonoBehaviour
         wallController.OpenWall();
         loading = false;
         pickaxeDetector.Enable();
+        resetButton.ActivateButton();
     }
 
     private void ClearGrid()
