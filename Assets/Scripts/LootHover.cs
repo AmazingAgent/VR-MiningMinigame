@@ -42,4 +42,9 @@ public class LootHover : MonoBehaviour
     {
         GameObject.Find("CustomHands").GetComponent<HandController>().ShowHand(interactor);
     }
+
+    public void SetMaterials(Material[] newMaterials)
+    {
+        originalMaterials = newMaterials;
+    }
 }
