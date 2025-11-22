@@ -24,6 +24,7 @@ public class ChiselHitEffects : MonoBehaviour
     {
         if (timer <= 0f)
         {
+            audioSource.pitch = Random.Range(1.2f, 1.4f);
             audioSource.Play();
 
             ps.Play();

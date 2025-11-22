@@ -613,6 +613,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d71885aa7f49ded439861db7f0f2c33a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  price: 22
   grabHandle: {fileID: 7615190657991593006}
   background: {fileID: 3653954840375936968}
   backgroundPos: {x: 0, y: 0, z: 0}

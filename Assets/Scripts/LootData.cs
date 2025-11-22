@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class LootData : MonoBehaviour
 {
+    [SerializeField] private int price;
+
     //public bool unlocked = false;
     [SerializeField] GameObject grabHandle;
     [SerializeField] GameObject background;
@@ -127,5 +129,14 @@ public class LootData : MonoBehaviour
     public void SetObjectStorage(GameObject newStorageObj)
     {
         objectStorage = newStorageObj;
+    }
+
+    public int GetPrice()
+    {
+        return price;
+    }
+    public void IncreasePrice(int priceIncrease)
+    {
+        price += priceIncrease;
     }
 }

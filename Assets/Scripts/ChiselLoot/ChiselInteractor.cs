@@ -1,13 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ChiselInteractor : MonoBehaviour
 {
+    [SerializeField] private LootData lootData;
+    [SerializeField] private int priceIncrease = 5;
+
     [SerializeField] private bool isUnlocked = false;
     [SerializeField] private bool isChiseled = false;
 
     [SerializeField] private Mesh chiseledVersion;
+
+    [SerializeField] private ParticleSystem ps;
 
     
     public void UnlockChiselInteraction()
@@ -24,6 +30,16 @@ public class ChiselInteractor : MonoBehaviour
             isChiseled = true;
 
             collision.gameObject.GetComponent<ChiselHitEffects>().DoParticle();
+
+            lootData.IncreasePrice(priceIncrease);
+
+            DoParticle();
         }
     }
+
+    public void DoParticle()
+    {
+        ps.Play();
+    }
+
 }

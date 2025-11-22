@@ -28,4 +28,16 @@ public class PickaxeDetector : MonoBehaviour
     {
         colliders.Remove(obj);
     }
+
+
+    public void Disable()
+    {
+        colliders.Clear();
+        GetComponent<BoxCollider>().enabled = false;
+    }
+
+    public void Enable()
+    {
+        GetComponent<BoxCollider>().enabled = true;
+    }
 }

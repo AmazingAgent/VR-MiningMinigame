@@ -17,7 +17,7 @@ public class HandController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(OVRInput.GetLocalControllerPosition(OVRInput.Controller.RHand));
+        //Debug.Log(OVRInput.GetLocalControllerPosition(OVRInput.Controller.RHand));
         rightHand.transform.position = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RHand);
         rightHand.transform.rotation = OVRInput.GetLocalControllerRotation(OVRInput.Controller.RHand);
 

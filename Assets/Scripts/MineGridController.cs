@@ -20,6 +20,14 @@ public class MineGridController : MonoBehaviour
     [SerializeField] private LootGridController lootGridController;
     [SerializeField] private GridHealthbar gridHealthbar;
 
+    // Wall Gameobject
+    [SerializeField] private WallController wallController;
+    [SerializeField] private WallVisibility topWall;
+    [SerializeField] private bool loading = true;
+
+    // Pickaxe Detector
+    [SerializeField] private PickaxeDetector pickaxeDetector;
+
     void Start()
     {
         // Initialize the grid
@@ -33,16 +41,30 @@ public class MineGridController : MonoBehaviour
         
     }
 
-
+    public void ResetGrid()
+    {
+        if (!loading)
+        {
+            loading = true;
+            pickaxeDetector.Disable();
+            wallController.CloseWall();
+        }
+    }
 
     // Initialize the grid
     public void InitializeGrid()
     {
+        //wallController.CloseWall();
+
         lootGridController.InitializeGrid();
         ClearGrid();
         GenerateGrid();
         SpawnGrid();
         gridHealthbar.UpdateHealth(gridCurrentHealth);
+
+        wallController.OpenWall();
+        loading = false;
+        pickaxeDetector.Enable();
     }
 
     private void ClearGrid()
@@ -124,7 +146,7 @@ public class MineGridController : MonoBehaviour
             gridCurrentHealth = 0;
             gridHealthbar.UpdateHealth(gridCurrentHealth);
 
-            InitializeGrid();
+            ResetGrid();
         }
         gridHealthbar.UpdateHealth(gridCurrentHealth);
     }
