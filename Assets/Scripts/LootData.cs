@@ -13,13 +13,21 @@ public class LootData : MonoBehaviour
     [SerializeField] Vector3 backgroundPos;
     private GameObject objectStorage;
     public GameObject lootPanel;
+    
 
     [SerializeField] private List<Vector2Int> occupiedSlots = new List<Vector2Int>();
 
     [SerializeField] private Vector2Int[] chunkSlots;
     private MineGridController gridData;
 
+    // Unlock sounds
+    private bool unlocked = false;
+    private AudioSource popSound;
 
+    private void Start()
+    {
+        popSound = GetComponent<AudioSource>();
+    }
 
     private void Update()
     {
@@ -122,6 +130,12 @@ public class LootData : MonoBehaviour
         {
             background.transform.parent = lootPanel.transform;
             background.transform.position = backgroundPos + lootPanel.transform.position;
+        }
+
+        if (!unlocked)
+        {
+            unlocked = true;
+            popSound.Play();
         }
     }
 
