@@ -30,6 +30,8 @@ public class MineGridController : MonoBehaviour
     // Pickaxe Detector
     [SerializeField] private PickaxeDetector pickaxeDetector;
 
+    [SerializeField] private Tutorial tutorial;
+
     void Start()
     {
         // Initialize the grid
@@ -152,6 +154,8 @@ public class MineGridController : MonoBehaviour
             ResetGrid();
         }
         gridHealthbar.UpdateHealth(gridCurrentHealth);
+        tutorial.AttemptDamageGrid();
+
     }
 
 

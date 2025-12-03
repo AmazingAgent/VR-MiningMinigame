@@ -2,18 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DepositBoxController : MonoBehaviour
+public class WorkstationItemDetector : MonoBehaviour
 {
-    [SerializeField] private GameObject sellStorage;
     [SerializeField] private Tutorial tutorial;
-
     private void OnTriggerEnter(Collider other)
     {
-        // Detects if loot entered container
         if (other.transform.parent.GetComponent<LootData>() != null)
         {
-            tutorial.AttemptSellItem();
-            other.transform.parent.parent = sellStorage.transform;
+            tutorial.AttemptPlaceItemDown();
         }
     }
 }

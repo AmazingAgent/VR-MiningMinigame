@@ -26,6 +26,10 @@ public class TogglePickaxe : MonoBehaviour
     public GameObject handModelRight;
     public GameObject handModelLeft;
 
+
+    [SerializeField] private PickaxeTutorial tutorial;    
+    
+
     private void Start()
     {
         EquipPickaxe();
@@ -105,6 +109,8 @@ public class TogglePickaxe : MonoBehaviour
         toolState = 1;
         targetHeadRot = Quaternion.Euler(pickaxeHead.transform.localEulerAngles.x, pickaxeHead.transform.localEulerAngles.y, 180);
         targetGearRot = Quaternion.Euler(pickaxeHead.transform.localEulerAngles.x, pickaxeHead.transform.localEulerAngles.y, -180);
+
+        tutorial.DeactivateTutorial();
 
     }
 
