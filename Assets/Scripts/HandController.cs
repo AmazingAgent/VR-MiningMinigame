@@ -31,11 +31,11 @@ public class HandController : MonoBehaviour
         {
             if (interactor.Interactors.ToList().Last().gameObject.transform.parent.parent.parent.name.Contains("Right"))
             {
-                rightHand.SetActive(false);
+                //rightHand.SetActive(false);
             }
             if (interactor.Interactors.ToList().Last().gameObject.transform.parent.parent.parent.name.Contains("Left"))
             {
-                leftHand.SetActive(false);
+                //leftHand.SetActive(false);
             }
         }
     }
