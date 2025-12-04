@@ -13,6 +13,8 @@ public class Tutorial : MonoBehaviour
 
 
     [SerializeField] private PickaxeTutorial pickaxeTutorial;
+
+    [SerializeField] private AudioSource correctSound;
     void Start()
     {
         UpdateInstructions();
@@ -38,6 +40,7 @@ public class Tutorial : MonoBehaviour
     private void NextInstruction()
     {
         instructionNum++;
+        correctSound.Play();
         UpdateInstructions();
     }
 
